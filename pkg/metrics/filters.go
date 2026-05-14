@@ -19,7 +19,7 @@ func NSRegex(pattern string) string {
 	return fmt.Sprintf(`namespace=~"%s"`, pattern)
 }
 
-// NSRegex returns namespace!~"pattern".
+// NSNotRegex returns namespace!~"pattern".
 func NSNotRegex(pattern string) string {
 	return fmt.Sprintf(`namespace!~"%s"`, pattern)
 }
