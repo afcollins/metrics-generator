@@ -13,11 +13,16 @@ const (
 	MetricAPIServerRequestTotal    Metric = "apiserver_request_total"
 	MetricAPIServerInflightReqs    Metric = "apiserver_current_inflight_requests"
 
+	// Cluster Operator
+	MetricClusterOperatorConditions Metric = "cluster_operator_conditions"
+
 	// Container
 	MetricContainerCPU         Metric = "container_cpu_usage_seconds_total"
 	MetricContainerMemoryRSS   Metric = "container_memory_rss"
 	MetricContainerMemoryWS    Metric = "container_memory_working_set_bytes"
+	MetricContainerFSReads     Metric = "container_fs_reads_bytes_total"
 	MetricContainerFSWrites    Metric = "container_fs_writes_bytes_total"
+	MetricContainerThreads     Metric = "container_threads"
 	MetricContainerCRIOLatency Metric = "container_runtime_crio_operations_latency_microseconds"
 
 	// Process (kubelet, crio, etc.)
@@ -25,21 +30,31 @@ const (
 	MetricProcessMemory Metric = "process_resident_memory_bytes"
 
 	// Node
-	MetricNodeCPU              Metric = "node_cpu_seconds_total"
-	MetricNodeMemoryTotal      Metric = "node_memory_MemTotal_bytes"
-	MetricNodeMemoryAvailable  Metric = "node_memory_MemAvailable_bytes"
-	MetricNodeMemoryActive     Metric = "node_memory_Active_bytes"
-	MetricNodeMemoryCached     Metric = "node_memory_Cached_bytes"
-	MetricNodeMemoryBuffers    Metric = "node_memory_Buffers_bytes"
-	MetricNodeNetworkRx        Metric = "node_network_receive_bytes_total"
-	MetricNodeNetworkTx        Metric = "node_network_transmit_bytes_total"
-	MetricNodeNetworkRxErrs    Metric = "node_network_receive_errs_total"
-	MetricNodeNetworkTxErrs    Metric = "node_network_transmit_errs_total"
-	MetricNodeNetworkTxDrop    Metric = "node_network_transmit_drop"
-	MetricNodeNetworkRxDrop    Metric = "node_network_receive_drop_total"
-	MetricNodeDiskWritten      Metric = "node_disk_written_bytes_total"
-	MetricNodeDiskRead         Metric = "node_disk_read_bytes_total"
-	MetricNodeVmstatPgmajfault Metric = "node_vmstat_pgmajfault"
+	MetricNodeCPU                    Metric = "node_cpu_seconds_total"
+	MetricNodeLoad1                  Metric = "node_load1"
+	MetricNodeFsFilesFree            Metric = "node_filesystem_files_free"
+	MetricNodeFsFiles                Metric = "node_filesystem_files"
+	MetricNodeMemoryFree             Metric = "node_memory_MemFree_bytes"
+	MetricNodeMemoryTotal            Metric = "node_memory_MemTotal_bytes"
+	MetricNodeMemoryAvailable        Metric = "node_memory_MemAvailable_bytes"
+	MetricNodeMemoryActive           Metric = "node_memory_Active_bytes"
+	MetricNodeMemoryCached           Metric = "node_memory_Cached_bytes"
+	MetricNodeMemoryBuffers          Metric = "node_memory_Buffers_bytes"
+	MetricNodeNFConntrackEntries     Metric = "node_nf_conntrack_entries"
+	MetricNodeNFConntrackEntriesLimit Metric = "node_nf_conntrack_entries_limit"
+	MetricNodeNetworkRx              Metric = "node_network_receive_bytes_total"
+	MetricNodeNetworkTx              Metric = "node_network_transmit_bytes_total"
+	MetricNodeNetworkRxPackets       Metric = "node_network_receive_packets_total"
+	MetricNodeNetworkTxPackets       Metric = "node_network_transmit_packets_total"
+	MetricNodeNetworkRxErrs          Metric = "node_network_receive_errs_total"
+	MetricNodeNetworkTxErrs          Metric = "node_network_transmit_errs_total"
+	MetricNodeNetworkRxDrop          Metric = "node_network_receive_drop_total"
+	MetricNodeNetworkTxDrop          Metric = "node_network_transmit_drop_total"
+	MetricNodeDiskReadsCompleted     Metric = "node_disk_reads_completed_total"
+	MetricNodeDiskWritesCompleted    Metric = "node_disk_writes_completed_total"
+	MetricNodeDiskWritten            Metric = "node_disk_written_bytes_total"
+	MetricNodeDiskRead               Metric = "node_disk_read_bytes_total"
+	MetricNodeVmstatPgmajfault       Metric = "node_vmstat_pgmajfault"
 
 	// Etcd
 	MetricEtcdLeaderChanges        Metric = "etcd_server_leader_changes_seen_total"
@@ -56,8 +71,10 @@ const (
 	MetricKubeNamespacePhase      Metric = "kube_namespace_status_phase"
 	MetricKubePodStatusPhase      Metric = "kube_pod_status_phase"
 	MetricKubePodInfo             Metric = "kube_pod_info"
+	MetricKubeNodeInfo            Metric = "kube_node_info"
 	MetricKubeSecretInfo          Metric = "kube_secret_info"
 	MetricKubeDeploymentReplicas  Metric = "kube_deployment_spec_replicas"
+	MetricKubeDeploymentLabels    Metric = "kube_deployment_labels"
 	MetricKubeReplicaSetReplicas  Metric = "kube_replicaset_spec_replicas"
 	MetricKubeConfigmapInfo       Metric = "kube_configmap_info"
 	MetricKubeServiceInfo         Metric = "kube_service_info"
@@ -67,6 +84,7 @@ const (
 
 	// OpenShift
 	MetricOCPRouteCreated    Metric = "openshift_route_created"
+	MetricOCPRouteInfo       Metric = "openshift_route_info"
 	MetricOCPTSDBHeadSeries  Metric = "openshift:prometheus_tsdb_head_series:sum"
 	MetricOCPTSDBHeadSamples Metric = "openshift:prometheus_tsdb_head_samples_appended_total:sum"
 
@@ -94,8 +112,16 @@ const (
 	MetricKubevirtMigrationsRunning  Metric = "kubevirt_vmi_migrations_in_running_phase"
 	MetricKubevirtMigrationsPending  Metric = "kubevirt_vmi_migrations_in_pending_phase"
 
+	// OVN-Kubernetes
+	MetricOVNKubeControllerPodLatency  Metric = "ovnkube_controller_pod_creation_latency_seconds"
+	MetricOVNKubeNodeCNIRequestDuration Metric = "ovnkube_node_cni_request_duration_seconds"
+
 	// OVS
 	MetricOVSBuildInfo Metric = "ovs_build_info"
+
+	// Prometheus / Go runtime
+	MetricGoGoroutines Metric = "go_goroutines"
+	MetricAlerts       Metric = "ALERTS"
 
 	// Kueue
 	MetricKueueAdmissionWaitTime Metric = "kueue_admission_wait_time_seconds"
@@ -132,7 +158,7 @@ const (
 	GroupByPod            GroupBy = "pod"
 	GroupByNamespace      GroupBy = "namespace"
 	GroupByNode           GroupBy = "node"
-	GroupByInstance        GroupBy = "instance"
+	GroupByInstance       GroupBy = "instance"
 	GroupByVerb           GroupBy = "verb"
 	GroupByResource       GroupBy = "resource"
 	GroupByCode           GroupBy = "code"
@@ -150,6 +176,9 @@ const (
 	GroupByClusterVersion GroupBy = "cluster_version"
 	GroupByResult         GroupBy = "result"
 	GroupByRequestKind    GroupBy = "request_kind"
+	GroupByService        GroupBy = "service"
+	GroupByAlertname      GroupBy = "alertname"
+	GroupBySeverity       GroupBy = "severity"
 )
 
 // RateInterval represents a Prometheus rate/irate window.
@@ -167,9 +196,10 @@ const (
 type NodeRole string
 
 const (
-	RoleMaster NodeRole = "master"
-	RoleWorker NodeRole = "worker"
-	RoleInfra  NodeRole = "infra"
+	RoleMaster       NodeRole = "master"
+	RoleWorker       NodeRole = "worker"
+	RoleInfra        NodeRole = "infra"
+	RoleControlPlane NodeRole = "control-plane"
 )
 
 // AggFunc represents a PromQL aggregation function.

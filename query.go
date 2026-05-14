@@ -43,6 +43,13 @@ func (q *Query) IRate(interval RateInterval) *Query {
 	return q
 }
 
+// RateSubquery wraps in rate() using subquery syntax: rate(expr[interval:]).
+// Use this when the inner expression is a binary join that must be evaluated as a subquery.
+func (q *Query) RateSubquery(interval string) *Query {
+	q.expr = fmt.Sprintf("rate(%s[%s:])", q.expr, interval)
+	return q
+}
+
 // BucketRate wraps in rate() with _bucket appended to the metric name (before any filters).
 // Handles both "metric{}" → "metric_bucket{}" and "metric{filters}" → "metric_bucket{filters}".
 func (q *Query) BucketRate(interval RateInterval) *Query {

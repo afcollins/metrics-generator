@@ -226,6 +226,21 @@ func TestBinaryJoins(t *testing.T) {
 	}
 }
 
+func TestRateSubquery(t *testing.T) {
+	// Matches dashboard pattern: rate((metric * on(instance) group_left label_replace(...))[$interval:])
+	got := Q(MetricNodeCPU, `mode!="idle"`).
+		MultiplyOnGroupLeft([]GroupBy{GroupByInstance}, NodeRoleLabelReplace(RoleControlPlane)).
+		Paren().
+		RateSubquery("$interval").
+		Agg(AggSum, GroupByInstance).
+		Multiply("100").
+		String()
+	want := `sum(rate((node_cpu_seconds_total{mode!="idle"} * on (instance) group_left label_replace(kube_node_role{role="control-plane"}, "instance", "$1", "node", "(.+)"))[$interval:])) by (instance) * 100`
+	if got != want {
+		t.Errorf("got:\n  %s\nwant:\n  %s", got, want)
+	}
+}
+
 func TestOverTime(t *testing.T) {
 	tests := []struct {
 		name     string
