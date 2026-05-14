@@ -19,6 +19,11 @@ func NSRegex(pattern string) string {
 	return fmt.Sprintf(`namespace=~"%s"`, pattern)
 }
 
+// NSRegex returns namespace!~"pattern".
+func NSNotRegex(pattern string) string {
+	return fmt.Sprintf(`namespace!~"%s"`, pattern)
+}
+
 // NSPrefix returns namespace=~"prefix.*".
 func NSPrefix(prefix string) string {
 	return NSRegex(prefix + ".*")

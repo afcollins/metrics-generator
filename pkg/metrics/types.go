@@ -30,31 +30,31 @@ const (
 	MetricProcessMemory Metric = "process_resident_memory_bytes"
 
 	// Node
-	MetricNodeCPU                    Metric = "node_cpu_seconds_total"
-	MetricNodeLoad1                  Metric = "node_load1"
-	MetricNodeFsFilesFree            Metric = "node_filesystem_files_free"
-	MetricNodeFsFiles                Metric = "node_filesystem_files"
-	MetricNodeMemoryFree             Metric = "node_memory_MemFree_bytes"
-	MetricNodeMemoryTotal            Metric = "node_memory_MemTotal_bytes"
-	MetricNodeMemoryAvailable        Metric = "node_memory_MemAvailable_bytes"
-	MetricNodeMemoryActive           Metric = "node_memory_Active_bytes"
-	MetricNodeMemoryCached           Metric = "node_memory_Cached_bytes"
-	MetricNodeMemoryBuffers          Metric = "node_memory_Buffers_bytes"
-	MetricNodeNFConntrackEntries     Metric = "node_nf_conntrack_entries"
+	MetricNodeCPU                     Metric = "node_cpu_seconds_total"
+	MetricNodeLoad1                   Metric = "node_load1"
+	MetricNodeFsFilesFree             Metric = "node_filesystem_files_free"
+	MetricNodeFsFiles                 Metric = "node_filesystem_files"
+	MetricNodeMemoryFree              Metric = "node_memory_MemFree_bytes"
+	MetricNodeMemoryTotal             Metric = "node_memory_MemTotal_bytes"
+	MetricNodeMemoryAvailable         Metric = "node_memory_MemAvailable_bytes"
+	MetricNodeMemoryActive            Metric = "node_memory_Active_bytes"
+	MetricNodeMemoryCached            Metric = "node_memory_Cached_bytes"
+	MetricNodeMemoryBuffers           Metric = "node_memory_Buffers_bytes"
+	MetricNodeNFConntrackEntries      Metric = "node_nf_conntrack_entries"
 	MetricNodeNFConntrackEntriesLimit Metric = "node_nf_conntrack_entries_limit"
-	MetricNodeNetworkRx              Metric = "node_network_receive_bytes_total"
-	MetricNodeNetworkTx              Metric = "node_network_transmit_bytes_total"
-	MetricNodeNetworkRxPackets       Metric = "node_network_receive_packets_total"
-	MetricNodeNetworkTxPackets       Metric = "node_network_transmit_packets_total"
-	MetricNodeNetworkRxErrs          Metric = "node_network_receive_errs_total"
-	MetricNodeNetworkTxErrs          Metric = "node_network_transmit_errs_total"
-	MetricNodeNetworkRxDrop          Metric = "node_network_receive_drop_total"
-	MetricNodeNetworkTxDrop          Metric = "node_network_transmit_drop_total"
-	MetricNodeDiskReadsCompleted     Metric = "node_disk_reads_completed_total"
-	MetricNodeDiskWritesCompleted    Metric = "node_disk_writes_completed_total"
-	MetricNodeDiskWritten            Metric = "node_disk_written_bytes_total"
-	MetricNodeDiskRead               Metric = "node_disk_read_bytes_total"
-	MetricNodeVmstatPgmajfault       Metric = "node_vmstat_pgmajfault"
+	MetricNodeNetworkRx               Metric = "node_network_receive_bytes_total"
+	MetricNodeNetworkTx               Metric = "node_network_transmit_bytes_total"
+	MetricNodeNetworkRxPackets        Metric = "node_network_receive_packets_total"
+	MetricNodeNetworkTxPackets        Metric = "node_network_transmit_packets_total"
+	MetricNodeNetworkRxErrs           Metric = "node_network_receive_errs_total"
+	MetricNodeNetworkTxErrs           Metric = "node_network_transmit_errs_total"
+	MetricNodeNetworkRxDrop           Metric = "node_network_receive_drop_total"
+	MetricNodeNetworkTxDrop           Metric = "node_network_transmit_drop_total"
+	MetricNodeDiskReadsCompleted      Metric = "node_disk_reads_completed_total"
+	MetricNodeDiskWritesCompleted     Metric = "node_disk_writes_completed_total"
+	MetricNodeDiskWritten             Metric = "node_disk_written_bytes_total"
+	MetricNodeDiskRead                Metric = "node_disk_read_bytes_total"
+	MetricNodeVmstatPgmajfault        Metric = "node_vmstat_pgmajfault"
 
 	// Etcd
 	MetricEtcdLeaderChanges        Metric = "etcd_server_leader_changes_seen_total"
@@ -113,7 +113,7 @@ const (
 	MetricKubevirtMigrationsPending  Metric = "kubevirt_vmi_migrations_in_pending_phase"
 
 	// OVN-Kubernetes
-	MetricOVNKubeControllerPodLatency  Metric = "ovnkube_controller_pod_creation_latency_seconds"
+	MetricOVNKubeControllerPodLatency   Metric = "ovnkube_controller_pod_creation_latency_seconds"
 	MetricOVNKubeNodeCNIRequestDuration Metric = "ovnkube_node_cni_request_duration_seconds"
 
 	// OVS
@@ -179,6 +179,7 @@ const (
 	GroupByService        GroupBy = "service"
 	GroupByAlertname      GroupBy = "alertname"
 	GroupBySeverity       GroupBy = "severity"
+	GroupByKey            GroupBy = "key"
 )
 
 // RateInterval represents a Prometheus rate/irate window.
