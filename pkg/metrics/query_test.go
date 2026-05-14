@@ -168,19 +168,19 @@ func TestOnGroupLeft(t *testing.T) {
 			name: "multiply on group_left with label_replace",
 			query: Q(MetricNodeCPU, `mode!="idle"`).
 				MultiplyOnGroupLeft([]GroupBy{GroupByInstance}, NodeRoleLabelReplace(RoleWorker)),
-			expected: `node_cpu_seconds_total{mode!="idle"} * on (instance) group_left label_replace(kube_node_role{role="worker"}, "instance", "$1", "node", "(.+)")`,
+			expected: `(node_cpu_seconds_total{mode!="idle"} * on (instance) group_left label_replace(kube_node_role{role="worker"}, "instance", "$1", "node", "(.+)"))`,
 		},
 		{
 			name: "multiply on group_left simple",
 			query: Q(Metric("container_threads"), `container!=""`).
 				MultiplyOnGroupLeft([]GroupBy{GroupByNode}, NodeRoleFilter(RoleWorker)),
-			expected: `container_threads{container!=""} * on (node) group_left kube_node_role{role="worker"}`,
+			expected: `(container_threads{container!=""} * on (node) group_left kube_node_role{role="worker"})`,
 		},
 		{
 			name: "generic on group_left with division",
 			query: Q(MetricContainerCPU, "").
 				OnGroupLeft("/", []GroupBy{GroupByNode}, Q(MetricNodeMemoryTotal, "")),
-			expected: `container_cpu_usage_seconds_total{} / on (node) group_left node_memory_MemTotal_bytes{}`,
+			expected: `(container_cpu_usage_seconds_total{} / on (node) group_left node_memory_MemTotal_bytes{})`,
 		},
 	}
 	for _, tt := range tests {
@@ -235,7 +235,7 @@ func TestRateSubquery(t *testing.T) {
 		Agg(AggSum, GroupByInstance).
 		Multiply("100").
 		String()
-	want := `sum(rate((node_cpu_seconds_total{mode!="idle"} * on (instance) group_left label_replace(kube_node_role{role="control-plane"}, "instance", "$1", "node", "(.+)"))[$interval:])) by (instance) * 100`
+	want := `sum(rate(((node_cpu_seconds_total{mode!="idle"} * on (instance) group_left label_replace(kube_node_role{role="control-plane"}, "instance", "$1", "node", "(.+)")))[$interval:])) by (instance) * 100`
 	if got != want {
 		t.Errorf("got:\n  %s\nwant:\n  %s", got, want)
 	}

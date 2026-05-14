@@ -45,7 +45,7 @@ func (q *Query) IRate(interval RateInterval) *Query {
 
 // RateSubquery wraps in rate() using subquery syntax: rate(expr[interval:]).
 // Use this when the inner expression is a binary join that must be evaluated as a subquery.
-func (q *Query) RateSubquery(interval string) *Query {
+func (q *Query) RateSubquery(interval RateInterval) *Query {
 	q.expr = fmt.Sprintf("rate(%s[%s:])", q.expr, interval)
 	return q
 }
@@ -135,7 +135,7 @@ func (q *Query) Gte(threshold string) *Query {
 
 // OnGroupLeft appends "op on (labels) group_left rightExpr" for any binary operator.
 func (q *Query) OnGroupLeft(op string, labels []GroupBy, right *Query) *Query {
-	q.expr = fmt.Sprintf("%s %s on (%s) group_left %s", q.expr, op, joinGroupBy(labels), right.expr)
+	q.expr = fmt.Sprintf("(%s %s on (%s) group_left %s)", q.expr, op, joinGroupBy(labels), right.expr)
 	return q
 }
 
