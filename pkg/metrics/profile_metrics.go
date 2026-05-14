@@ -2,7 +2,7 @@ package metrics
 
 // BuildMetricsProfile generates the metrics.yml profile (56 metrics).
 func BuildMetricsProfile(g *Generator) {
-	ocpNS := `name!="",container!~"POD|",namespace=~"openshift-.*|cilium|stackrox|calico.*|tigera.*"`
+	ocpNS := Filters(`name!="",container!~"POD|"`, NSIn("openshift-.*", "cilium", "stackrox", "calico.*", "tigera.*"))
 	netDevice := `device!~"lo|ovs-system"`
 
 	// API server
