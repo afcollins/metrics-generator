@@ -1,4 +1,4 @@
-package main
+package metrics
 
 // BuildMetricsReportStackroxProfile generates the metrics-report-stackrox.yml profile.
 func BuildMetricsReportStackroxProfile(g *Generator) {

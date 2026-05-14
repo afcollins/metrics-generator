@@ -1,4 +1,4 @@
-package main
+package metrics
 
 // ---------------------------------------------------------------------------
 // Typed enums for type-safe metrics profile generation

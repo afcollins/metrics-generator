@@ -4,17 +4,19 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/kube-burner/metrics-generator/pkg/metrics"
 )
 
 var profiles = []struct {
 	filename string
-	build    func(*Generator)
+	build    func(*metrics.Generator)
 }{
-	{"metrics.yml", BuildMetricsProfile},
-	{"build-farm-metrics.yml", BuildBuildFarmProfile},
-	{"kueue-metrics.yml", BuildKueueProfile},
-	{"metrics-aggregated.yml", BuildMetricsAggregatedProfile},
-	{"metrics-report-stackrox.yml", BuildMetricsReportStackroxProfile},
+	{"metrics.yml", metrics.BuildMetricsProfile},
+	{"build-farm-metrics.yml", metrics.BuildBuildFarmProfile},
+	{"kueue-metrics.yml", metrics.BuildKueueProfile},
+	{"metrics-aggregated.yml", metrics.BuildMetricsAggregatedProfile},
+	{"metrics-report-stackrox.yml", metrics.BuildMetricsReportStackroxProfile},
 }
 
 func main() {
@@ -29,7 +31,7 @@ func main() {
 	}
 
 	for _, p := range profiles {
-		g := &Generator{}
+		g := &metrics.Generator{}
 		p.build(g)
 		out, err := g.Generate()
 		if err != nil {

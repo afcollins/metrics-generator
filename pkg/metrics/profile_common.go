@@ -1,4 +1,4 @@
-package main
+package metrics
 
 // addAPILatencyMetrics adds the standard API server latency and request rate metrics.
 func addAPILatencyMetrics(g *Generator) {

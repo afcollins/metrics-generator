@@ -1,4 +1,4 @@
-package main
+package metrics
 
 // BuildBuildFarmProfile generates the build-farm-metrics.yml profile.
 func BuildBuildFarmProfile(g *Generator) {

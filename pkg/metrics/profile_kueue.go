@@ -1,4 +1,4 @@
-package main
+package metrics
 
 // BuildKueueProfile generates the kueue-metrics.yml profile.
 func BuildKueueProfile(g *Generator) {

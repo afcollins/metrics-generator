@@ -1,4 +1,4 @@
-package main
+package metrics
 
 // BuildMetricsAggregatedProfile generates the metrics-aggregated.yml profile (47 metrics).
 func BuildMetricsAggregatedProfile(g *Generator) {
