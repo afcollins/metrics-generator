@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/kube-burner/metrics-generator/pkg/metrics"
+	"github.com/afcollins/metrics-generator/pkg/metrics"
 )
 
 var profiles = []struct {

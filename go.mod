@@ -1,4 +1,4 @@
-module github.com/kube-burner/metrics-generator
+module github.com/afcollins/metrics-generator
 
 go 1.25.8
 
