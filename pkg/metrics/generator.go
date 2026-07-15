@@ -141,6 +141,29 @@ func (g *Generator) Generate() ([]byte, error) {
 	return yaml.Marshal(g.metrics)
 }
 
+type recordingRule struct {
+	Record string `yaml:"record"`
+	Expr   string `yaml:"expr"`
+}
+
+type ruleGroup struct {
+	Name  string          `yaml:"name"`
+	Rules []recordingRule `yaml:"rules"`
+}
+
+type rulesFile struct {
+	Groups []ruleGroup `yaml:"groups"`
+}
+
+// GenerateRules returns the metrics as Prometheus recording rules YAML.
+func (g *Generator) GenerateRules(groupName string) ([]byte, error) {
+	var rules []recordingRule
+	for _, m := range g.metrics {
+		rules = append(rules, recordingRule{Record: m.MetricName, Expr: m.Query})
+	}
+	return yaml.Marshal(rulesFile{Groups: []ruleGroup{{Name: groupName, Rules: rules}}})
+}
+
 // Count returns the number of generated metric definitions.
 func (g *Generator) Count() int {
 	return len(g.metrics)
