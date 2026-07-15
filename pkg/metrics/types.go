@@ -144,7 +144,11 @@ type Percentile struct {
 }
 
 var (
+	P01  = Percentile{"0.01", "P01"}
+	P10  = Percentile{"0.10", "P10"}
+	P25  = Percentile{"0.25", "P25"}
 	P50  = Percentile{"0.50", "P50"}
+	P75  = Percentile{"0.75", "P75"}
 	P90  = Percentile{"0.90", "P90"}
 	P95  = Percentile{"0.95", "P95"}
 	P99  = Percentile{"0.99", "P99"}
@@ -207,11 +211,12 @@ const (
 type AggFunc string
 
 const (
-	AggSum   AggFunc = "sum"
-	AggAvg   AggFunc = "avg"
-	AggMax   AggFunc = "max"
-	AggMin   AggFunc = "min"
-	AggCount AggFunc = "count"
+	AggSum      AggFunc = "sum"
+	AggAvg      AggFunc = "avg"
+	AggMax      AggFunc = "max"
+	AggMin      AggFunc = "min"
+	AggCount    AggFunc = "count"
+	AggQuantile AggFunc = "quantile"
 )
 
 // TimeAggFunc represents a PromQL over-time aggregation function.

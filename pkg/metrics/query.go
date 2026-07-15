@@ -83,6 +83,17 @@ func (q *Query) Agg(fn AggFunc, groupBy ...GroupBy) *Query {
 	return q
 }
 
+// Quantile wraps in an aggregation function with optional group-by labels.
+// Produces: fn(expr) by (labels)
+func (q *Query) Quantile(percentile Percentile, groupBy ...GroupBy) *Query {
+	if len(groupBy) > 0 {
+		q.expr = fmt.Sprintf("quantile(%s,%s) by (%s)", percentile.Value, q.expr, joinGroupBy(groupBy))
+	} else {
+		q.expr = fmt.Sprintf("quantile(%s,%s)", percentile.Value, q.expr)
+	}
+	return q
+}
+
 // AggBy wraps in an aggregation with "by" before the expression.
 // Produces: fn by (labels) (expr)
 // TODO: Remove after all existing profiles are regenerated; only exists to match legacy PromQL syntax.
