@@ -137,8 +137,12 @@ func (g *Generator) CustomTemplate(queryTmpl string, nameTmpl string, vars []map
 // ---------------------------------------------------------------------------
 
 // Generate returns the metrics profile as YAML bytes.
-func (g *Generator) Generate() ([]byte, error) {
-	return yaml.Marshal(g.metrics)
+func (g *Generator) Generate() []byte {
+	yamlOut, err := yaml.Marshal(g.metrics)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error generating metrics profile: %v\n", err)
+	}
+	return yamlOut
 }
 
 type recordingRule struct {
@@ -156,12 +160,16 @@ type rulesFile struct {
 }
 
 // GenerateRules returns the metrics as Prometheus recording rules YAML.
-func (g *Generator) GenerateRules(groupName string) ([]byte, error) {
+func (g *Generator) GenerateRules(groupName string) []byte {
 	var rules []recordingRule
 	for _, m := range g.metrics {
 		rules = append(rules, recordingRule{Record: m.MetricName, Expr: m.Query})
 	}
-	return yaml.Marshal(rulesFile{Groups: []ruleGroup{{Name: groupName, Rules: rules}}})
+	yamlOut, err := yaml.Marshal(rulesFile{Groups: []ruleGroup{{Name: groupName, Rules: rules}}})
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error generating rules %s: %v\n", groupName, err)
+	}
+	return yamlOut
 }
 
 // Count returns the number of generated metric definitions.

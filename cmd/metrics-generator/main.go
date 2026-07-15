@@ -33,11 +33,7 @@ func main() {
 	for _, p := range profiles {
 		g := &metrics.Generator{}
 		p.build(g)
-		out, err := g.Generate()
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "error generating %s: %v\n", p.filename, err)
-			os.Exit(1)
-		}
+		out := g.Generate()
 		path := filepath.Join(outDir, p.filename)
 		if err := os.WriteFile(path, out, 0644); err != nil {
 			fmt.Fprintf(os.Stderr, "error writing %s: %v\n", path, err)

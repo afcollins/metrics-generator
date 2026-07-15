@@ -21,10 +21,7 @@ func TestGeneratorAdd(t *testing.T) {
 	g.Add("testMetric", "up{}")
 	g.AddInstant("testInstant", "up{}", true)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
@@ -48,11 +45,7 @@ func TestGeneratorAddQuery(t *testing.T) {
 	g.AddQuery("test", Q(MetricNodeCPU, "").IRate(Rate2m).Agg(AggSum, GroupByInstance))
 	g.AddQueryInstant("testInstant", Q(MetricEtcdDBSize, "").Agg(AggAvg), false)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	out := g.Generate()
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
 		t.Fatalf("expected 2 metrics, got %d", len(metrics))
@@ -70,10 +63,7 @@ func TestHistogramQuantiles(t *testing.T) {
 	g.HistogramQuantiles("etcdCommit", MetricEtcdDiskCommitDuration,
 		[]Percentile{P50, P99}, "", []GroupBy{GroupByInstance})
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
@@ -104,10 +94,7 @@ func TestHistogramQuantilesIRate(t *testing.T) {
 		[]Percentile{P99}, Rate2m,
 		`apiserver="kube-apiserver"`, []GroupBy{GroupByVerb})
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 1 {
@@ -125,10 +112,7 @@ func TestRateForMetrics(t *testing.T) {
 		Rate2m, "", []GroupBy{GroupByInstance},
 	)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
@@ -151,10 +135,7 @@ func TestIRateForMetrics(t *testing.T) {
 		Rate2m, "", []GroupBy{GroupByMode, GroupByInstance},
 	)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 1 {
@@ -175,10 +156,7 @@ func TestAggForMetrics(t *testing.T) {
 		"", []GroupBy{GroupByInstance},
 	)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
@@ -200,10 +178,7 @@ func TestForNodeRoles(t *testing.T) {
 		},
 	)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 3 {
@@ -231,10 +206,7 @@ func TestForNodeRolesInstant(t *testing.T) {
 		},
 	)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
@@ -262,10 +234,7 @@ func TestCustomTemplate(t *testing.T) {
 		false,
 	)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 2 {
@@ -288,10 +257,7 @@ func TestCustomTemplateInstant(t *testing.T) {
 	g := &Generator{}
 	g.CustomTemplate(`up{}`, `testUp`, []map[string]string{{"_": ""}}, true)
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
+	out := g.Generate()
 
 	metrics := parseYAML(t, out)
 	if len(metrics) != 1 || !metrics[0].Instant {
@@ -317,11 +283,7 @@ func TestGenerateValidYAML(t *testing.T) {
 	g.AddInstant("test2", "up{}", true)
 	g.AddQuery("test3", Q(MetricNodeCPU, "").IRate(Rate2m))
 
-	out, err := g.Generate()
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	out := g.Generate()
 	// Verify it's valid YAML that roundtrips
 	var metrics []metricDefinition
 	if err := yaml.Unmarshal(out, &metrics); err != nil {
