@@ -55,6 +55,7 @@ const (
 	MetricNodeDiskWritten             Metric = "node_disk_written_bytes_total"
 	MetricNodeDiskRead                Metric = "node_disk_read_bytes_total"
 	MetricNodeVmstatPgmajfault        Metric = "node_vmstat_pgmajfault"
+	MetricInstanceNodeCPURate         Metric = "instance:node_cpu:rate:sum"
 
 	// Etcd
 	MetricEtcdLeaderChanges        Metric = "etcd_server_leader_changes_seen_total"
