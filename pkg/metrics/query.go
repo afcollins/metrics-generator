@@ -114,6 +114,12 @@ func (q *Query) AggBySpaced(fn AggFunc, groupBy ...GroupBy) *Query {
 	return q
 }
 
+// BottomK wraps in bottomk(k, ...).
+func (q *Query) BottomK(k int) *Query {
+	q.expr = fmt.Sprintf("bottomk(%d, %s)", k, q.expr)
+	return q
+}
+
 // TopK wraps in topk(k, ...).
 func (q *Query) TopK(k int) *Query {
 	q.expr = fmt.Sprintf("topk(%d, %s)", k, q.expr)
