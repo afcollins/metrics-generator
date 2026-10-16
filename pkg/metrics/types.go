@@ -204,6 +204,8 @@ type NodeRole string
 const (
 	RoleMaster       NodeRole = "master"
 	RoleWorker       NodeRole = "worker"
+	RoleWorker1      NodeRole = "worker-1"
+	RoleWorker2      NodeRole = "worker-2"
 	RoleInfra        NodeRole = "infra"
 	RoleControlPlane NodeRole = "control-plane"
 )
