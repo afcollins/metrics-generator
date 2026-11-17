@@ -53,7 +53,9 @@ const (
 	MetricNodeDiskReadsCompleted      Metric = "node_disk_reads_completed_total"
 	MetricNodeDiskWritesCompleted     Metric = "node_disk_writes_completed_total"
 	MetricNodeDiskWritten             Metric = "node_disk_written_bytes_total"
+	MetricNodeDiskWriteTime           Metric = "node_disk_write_time_seconds_total"
 	MetricNodeDiskRead                Metric = "node_disk_read_bytes_total"
+	MetricNodeDiskReadTime            Metric = "node_disk_read_time_seconds_total"
 	MetricNodeVmstatPgmajfault        Metric = "node_vmstat_pgmajfault"
 	MetricInstanceNodeCPURate         Metric = "instance:node_cpu:rate:sum"
 
